@@ -1,0 +1,15 @@
+h2 {
+    font-size: 36px;
+}
+
+.entry-field {
+    font-size: 24px;
+    margin-top: .5rem;
+    padding-right: 1rem;
+    text-align: left;
+}
+
+input .entry-field {
+    font-size: 24px;
+    margin-left: .5rem;
+}

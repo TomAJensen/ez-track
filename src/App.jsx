@@ -8,6 +8,10 @@ import BugInput from "./pages/BugInput";
 import BugList from "./pages/BugList";
 import UserListPage from "./pages/UsersListPage.jsx";
 import UserInputPage from "./pages/UserInputPage.jsx";
+import SignupForm from "./pages/SignupForm.jsx";
+import RecoverPassword from "./pages/RecoverPassword.jsx";
+import ValidateNewUser from "./pages/ValidateNewUser.jsx";
+import ValidateRecovery from "./pages/ValidateRecovery.jsx";
 
 function App() {
   return (
@@ -16,6 +20,11 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/recover" element={<RecoverPassword />} />
+          <Route path="/validate-new-user" element={<ValidateNewUser />} />
+          <Route path="/validate-recovery" element={<ValidateRecovery />} />
+
 
           <Route path="/bug-list" element={
               <ProtectedRoute>
@@ -37,6 +46,7 @@ function App() {
               <UserInputPage />
             </ProtectedRoute>
           } />
+
         </Routes>
       </AuthProvider>
     </BrowserRouter>

@@ -8,6 +8,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const redirectTo = location.state?.from?.pathname || "/bug-list";
 
@@ -37,10 +38,13 @@ export function LoginPage() {
       <div><EzTrackWelcome/></div>
       <div ><h3>Please Log in.</h3></div>
       <form onSubmit={handleSubmit}>
-        <input style={{width:"25%"}} className="bugInput" name="username" placeholder="Username" required />
-        <input style={{width:"25%"}} className="bugInput" name="password" type="password" placeholder="Password" required />
+        <input style={{width:"25%", borderRadius: 8, border: "1px solid #d1d5db"}} className="bugInput" name="username" placeholder="EMail" required />
+        <input style={{width:"25%", borderRadius: 8, border: "1px solid #d1d5db"}}
+               className="bugInput" name="password"
+               type={showPassword ? "text" : "password"} placeholder="Password" required />
         {error && <p style={{ color: "red" }}>{error}</p>}
         <div><button type="submit">Log In</button></div>
+        <div><span style={{cursor:"pointer"}}><u><a onClick={() =>{ navigate("/recover")}}>Forgot Password.</a></u> </span></div>
       </form>
     </div>
   );

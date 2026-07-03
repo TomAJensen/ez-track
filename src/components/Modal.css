@@ -1,0 +1,14 @@
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+dialog {
+    border-radius: 8px;
+    background-color: #10262b;
+    border-color: #34c6bd;
+}
+
+button {
+    margin-left: .5rem;
+}

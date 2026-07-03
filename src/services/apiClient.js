@@ -15,9 +15,16 @@ export function useApiClient() {
 
     if (res.status === 403) {
       logout(); // Token expired or invalid — force re-login
-      return;
+      throw new Error(`API error: ${res.status}`);
+      // return;
     }
-
+    if (res.status === 409) {
+      const errorInfo = await res.json();
+      throw new Error(`User email already exists - ${errorInfo.message}`);
+    }
+    if(res.status === 204) {
+      return {}
+    }
     if (!res.ok) throw new Error(`API error: ${res.status}`);
     return res.json();
   }
@@ -35,10 +42,46 @@ export function useApiClient() {
 
   async function saveBugDataInfo(bugDataInfo) {
     const method = bugDataInfo.id === null ? 'POST' : 'PUT';
-    const url = bugDataInfo.id === null ? 'http://localhost:8080/bug_data_info' :
+    const url = bugDataInfo.id === null ? 'http://localhost:8080/bug-data-info' :
       `http://localhost:8080/bug_data_info/${bugDataInfo.id}`;
     await apiFetch(url, {method: method, body: JSON.stringify(bugDataInfo)})
   }
 
-  return { apiFetch, saveFormData, saveBugDataInfo };
+  async function createNewUser(userInfo) {
+    const url = "http://localhost:8080/users";
+    const response = await apiFetch(url, {method: "PUT", body: JSON.stringify(userInfo)})
+    console.log(response)
+    return response;
+  }
+
+  async function validateNewUser(validationInfo) {
+    const url = "http://localhost:8080/users";
+    const response = await apiFetch(url, {method: "PATCH", body: JSON.stringify(validationInfo)})
+    console.log(response)
+    return response;
+  }
+
+  async function startPasswordRecovery(inputInfo) {
+    const url = "http://localhost:8080/password-recoveries";
+    const response = await apiFetch(url, {method: "PUT", body: JSON.stringify(inputInfo)})
+    console.log(response)
+    return response;
+  }
+
+  /**
+   * {password:"<>", email:"<>", validationCode:"<>"}
+   *
+   * @param validationInfo
+   * @returns {Promise<{}|any>}
+   */
+  async function completePasswordRecovery(validationInfo) {
+    const url = "http://localhost:8080/password-recoveries";
+    const response = await apiFetch(url, {method: "POST", body: JSON.stringify(validationInfo)})
+    console.log(response)
+    return response;
+  }
+
+  return { apiFetch, saveFormData, saveBugDataInfo,
+    createNewUser, validateNewUser,
+    startPasswordRecovery, completePasswordRecovery };
 }

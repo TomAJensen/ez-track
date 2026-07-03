@@ -33,10 +33,12 @@ function UserInputPage () {
       }
     }
     fetchItems().then(() => {});
-  });
+  },[]);
 
   return <>
-    <EzTrackTitle pageName={`${id}`}/>
+    <EzTrackTitle pageName={` - Edit User`}/>
+    <div style={{marginLeft: "auto", marginRight: "auto"}}><h2>{user.name}</h2></div>
+    <div><hr/></div>
     <div>Name:{user.name}</div>
     </>
 
